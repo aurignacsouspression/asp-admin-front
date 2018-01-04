@@ -1,0 +1,75 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="modalForm.title"></h4>
+            </div>
+            <form name="editionForm" ng-submit="modal.commitEdition()">
+                <div class="modal-body" ng-show="content">
+                    <div class="row" ng-if="uploadErrors">
+                        <div class="col-xs-12">
+                            <div class="alert alert-dismissable alert-warning">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <h4>Attention, une erreur a été détectée</h4>
+                                <p>{{ uploadErrors }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-horizontal">
+                            <div class="form-group required" ng-class="{ 'has-error': editionForm.year.$invalid }">
+                                <label class="col-xs-3 control-label" for="year">Année</label>
+                                <div class="col-xs-9">
+                                    <input id="year" name="year" type="number" class="form-control" ng-model="newEdition.year" required asp-check-existence>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label" for="description">Description</label>
+                                <div class="col-xs-9">
+                                    <textarea class="form-control" rows="4" id="description" ng-model="newEdition.description"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label" for="brasseurs">Brasseries</label>
+
+                                <div class="col-xs-9">
+                                    <ui-select id="brasseurs" multiple ng-model="modalForm.editionBrasseurs" ng-disabled="disabled">
+                                        <ui-select-match placeholder="Sélectionner...">{{$item.name}}</ui-select-match>
+                                        <ui-select-choices repeat="brasseur in modal.brasseurs | filter: $select.search">{{brasseur.name}}</ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <!-- Old One <div class="col-xs-9">
+                                    <button id="brasseurs" type="button" class="btn btn-default btn-block" ng-model="modalForm.editionBrasseurs" data-html="1"
+                                    data-multiple="1" data-animation="am-flip-x" data-max-length="0" data-max-length-html="sélectionné(s)" data-placeholder="Sélectionnez des brasseurs participants"
+                                    bs-options="brasseur.name for brasseur in brasseurs" bs-select></button>
+                                </div> -->
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label" for="a3">Affiche A3</label>
+                                <div class="col-xs-9" style="margin-top: 4px;">
+                                   <div id="a3" class="btn btn-default btn-sm" ng-disabled="!newEdition.year || editionForm.year.$error.exists" ngf-select ngf-change="modal.onFileSelectEdition($files)">Sélectionner un fichier...</div>
+                                    <div class="btn btn-danger btn-sm" ng-click="modal.deleteImageEdition(newEdition.a3)" ng-disabled="!newEdition.a3"
+                                    title="Supprimer l'affiche">
+                                        <i class="fa fa-eraser"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-9 col-xs-offset-3">
+                                    <img ng-if="newEdition.a3" ng-src="{{ editionFullPath + editionA3ToUpdate }}" alt="Affiche de l'édition" style="max-height: 200px; max-width: 200px;"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">Annuler</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="uploading || editionForm.$invalid" ng-bind="modalForm.action"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

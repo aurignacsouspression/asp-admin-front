@@ -1,0 +1,90 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="modalForm.title"></h4>
+            </div>
+            <form name="articleForm" ng-submit="commitArticle()">
+                <div class="modal-body" ng-show="content">
+                    <div class="row" ng-if="uploadErrors">
+                        <div class="col-xs-12">
+                            <div class="alert alert-dismissable alert-warning">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <h4>Attention, une erreur a été détectée</h4>
+                                <p>{{ uploadErrors }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-horizontal">
+                            <div class="form-group required" ng-class="{ 'has-error': articleForm.articleTitle.$error.exists }">
+                                <label class="col-xs-4 control-label" for="articleTitle">Titre de l'article</label>
+                                <div class="col-xs-8">
+                                    <input id="articleTitle" name="articleTitle" type="text" class="form-control" ng-model="presseCtrl.newArticle.title" required asp-check-existence>
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label class="col-xs-4 control-label label-sm" for="pressOrgan">Titre de presse</label>
+                                <div class="col-xs-8">
+                                    <button id="pressOrgan" type="button" class="btn btn-default btn-block" ng-model="presseCtrl.newArticle.pressOrgan" data-animation="am-flip-x"
+                                    data-placeholder="Sélectionnez un titre" bs-options="val.id as val.name for val in modalForm.presse" bs-select required></button>
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label class="col-xs-4 control-label" for="date">Date de parution</label>
+                                <div class="col-xs-8">
+                                    <input id="date" type="text" class="form-control" ng-model="presseCtrl.newArticle.date" data-date-type="number" data-max-date="today"
+                                    data-autoclose="1" bs-datepicker required>
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label class="col-xs-4 control-label label-sm" for="edition">Edition concernée</label>
+                                <div class="col-xs-8">
+                                    <button id="edition" type="button" class="btn btn-default btn-block" ng-model="presseCtrl.newArticle.edition" data-animation="am-flip-x"
+                                    data-placeholder="Sélectionnez une édition" bs-options="val.id as val.year for val in modalForm.editions" bs-select required></button>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': articleForm.link.$invalid }">
+                                <label class="col-xs-4 control-label" for="link">Lien</label>
+                                <div class="col-xs-8">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">http://</div>
+                                        <input id="link" name="link" type="text" class="form-control" ng-model="presseCtrl.newArticle.internetParsed" ng-pattern="/^(?!(http:\/\/)).+/">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label" for="extract">Extrait de l'article</label>
+                                <div class="col-xs-8">
+                                    <textarea class="form-control" rows="4" id="extract" ng-model="presseCtrl.newArticle.extract"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label" for="paper">Scan article papier</label>
+                                <div class="col-xs-8" style="margin-top: 4px;">
+                                    <div id="paper" class="btn btn-default btn-sm" ng-disabled="!presseCtrl.newArticle.title || articleForm.articleTitle.$error.exists"
+                                    ngf-select ngf-change="onFileSelectPresse($files)">Sélectionner un fichier...</div>
+                                    <div class="btn btn-danger btn-sm" ng-click="deleteImagePresse(presseCtrl.newArticle.paper)" ng-disabled="!presseCtrl.newArticle.paper"
+                                    title="Supprimer le scan de l'article">
+                                        <i class="fa fa-eraser"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-8 col-xs-offset-4">
+                                    <img ng-if="presseCtrl.newArticle.paper" ng-src="{{ articleScanFullPath + articleScanToUpdate }}" alt="Scan de l'article" style="max-height: 200px; max-width: 200px;"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">Annuler</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="uploading || articleForm.$invalid" ng-bind="modalForm.action"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

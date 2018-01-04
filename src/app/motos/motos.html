@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h1 style="display: inline-block;">Univers moto</h1>
+        <button class="btn btn-default" style="margin-top: -13px; margin-left: 20px;" ng-click="motosCtrl.initNewMoto()">Ajouter un stand moto</button>
+    </div>
+</div>
+<div class="row" style="margin-top: 40px;">
+    <div class="col-xs-12">
+        <table ng-table class="table table-hover admin-table">
+            <tr ng-repeat="moto in motosCtrl.motos">
+                <td data-title="'Nom du stand'" style="min-width: 180px;">{{moto.name}}</td>
+                <td data-title="'Type de stand'">{{ motosCtrl.motoType[moto.type] }}</td>
+                <td data-title="'Contact'" style="min-width: 150px">
+                    <a href="mailto:{{moto.email}}" class="btn btn-default btn-sm" title="Envoyer un mail" ng-if="moto.email">@</a>
+                    <a href="{{moto.internet}}" target="_blank" class="btn btn-default btn-sm" title="Visiter le site web" ng-if="moto.internet">www</a>
+                    <a href="{{moto.facebook}}" target="_blank" class="btn btn-default btn-sm" title="Aller sur la page Facebook" ng-if="moto.facebook"><i class="fa fa-facebook fa-lg"></i></a>
+                </td>
+                <td data-title="'Nom du contact'" style="min-width: 180px;">{{moto.contactName}}</td>
+                <td data-title="'Adresse postale'">
+                    <span ng-if="moto.street" ng-class="{'virgule-rue-addresse': moto.street && (moto.postal || moto.city)}">{{ moto.street }}</span>
+                    <span ng-if="moto.postal">{{ moto.postal }}</span>
+                    <span ng-if="moto.city">{{ moto.city }}</span>
+                </td>
+                <td data-title="'Description'" style="max-width: 600px;">{{moto.description | limitTo:200}}...</td>
+                <td data-title="'Action'" style="min-width: 100px; text-align: right">
+                    <button class="btn btn-default btn-sm" title="Modifier la brasserie" ng-click="motosCtrl.initModifyMoto(moto)">
+                        <i class="fa fa-pencil-square-o fa-lg"></i>
+                    </button>
+                    <button class="btn btn-default btn-sm" title="Supprimer" ng-click="motosCtrl.initDeleteMoto(moto)">
+                        <i class="fa fa-times fa-lg"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

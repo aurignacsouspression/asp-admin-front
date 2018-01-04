@@ -1,0 +1,21 @@
+<table ng-table class="table table-hover admin-table">
+    <tr ng-repeat="press in presseCtrl.presse">
+        <td data-title="'Titre de presse'" style="min-width: 180px;">{{press.name}}</td>
+        <td data-title="'Site internet'" style="min-width: 150px">
+            <a href="{{press.internet}}" target="_blank" title="Visiter le site web" ng-if="press.internet">{{press.internet}}</a>
+        </td>
+        <td data-title="'Logo'">
+            <img ng-if="press.logo" ng-src="{{ pressLogoFullPath + press.logo }}" alt="Logo du titre de presse" style="max-width: 500px; max-height: 500px;"
+            />
+            <span ng-if="!press.logo">Pas d'image</span>
+        </td>
+        <td data-title="'Action'" style="min-width: 100px; text-align: right">
+            <button class="btn btn-default btn-sm" title="Modifier le titre de presse" ng-click="presseCtrl.initModifyPressOrgan(press)">
+                <i class="fa fa-pencil-square-o fa-lg"></i>
+            </button>
+            <button class="btn btn-default btn-sm" title="Supprimer" ng-click="presseCtrl.initDeletePressOrgan(press)">
+                <i class="fa fa-times fa-lg"></i>
+            </button>
+        </td>
+    </tr>
+</table>

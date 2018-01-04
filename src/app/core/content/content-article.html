@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h1 style="display: inline-block;">
+            <a ng-href="#/{{articleCtrl.category.name}}/{{articleCtrl.contentKey}}/content">
+                <i class="fa fa-chevron-circle-left" style="cursor: pointer;" title="Retour arrière"></i>
+            </a>
+            &nbsp;&nbsp;<span ng-bind="articleCtrl.form.title"></span>
+        </h1>
+    </div>
+</div>
+
+<form name="contentArticleForm" ng-submit="articleCtrl.commitContentArticle()">
+    <div class="content-article form">
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="form-group required">
+                    <label class="control-label" for="title">Titre de l'article</label>
+                    <div>
+                        <input id="title" name="title" type="text" class="form-control" ng-model="articleCtrl.contentArticle.title" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="keywords">Mots clés (séparés par une virgule)</label>
+                    <div>
+                        <input id="keywords" name="keywords" type="text" class="form-control" ng-model="articleCtrl.contentArticle.keywords">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="description">Description</label>
+                    <div>
+                        <textarea class="form-control" rows="4" id="description" ng-model="articleCtrl.contentArticle.description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-9">
+                <div class="form-group required">
+                    <label class="control-label" for="content">Contenu</label>
+                    <div text-angular id="content" ng-model="articleCtrl.contentArticle.content" ta-toolbar="[['h1','h2','h3','h4','h5','h6','quote'],
+                         ['bold','italics','underline','strikeThrough','ul','ol','undo','redo','clear'],
+                         ['justifyLeft','justifyCenter','justifyRight','indent','outdent'],
+                         ['html','manageImages','insertLink']]"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="articleCtrl.goToContentArticles()">Annuler</button>
+        <button type="submit" class="btn btn-primary" ng-disabled="uploading || contentArticleForm.$invalid" ng-bind="articleCtrl.form.action"></button>
+    </div>
+</form>

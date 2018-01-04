@@ -1,0 +1,111 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 1200px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="modalForm.title"></h4>
+            </div>
+            <form name="hebergementForm" ng-submit="commitHebergement()">
+                <div>
+                    <div class="modal-body" ng-show="content">
+                        <div class="row" ng-if="uploadErrors">
+                            <div class="col-xs-12">
+                                <div class="alert alert-dismissable alert-warning">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    <h4>Attention, une erreur a été détectée :</h4>
+                                    <p>{{ uploadErrors }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5 form-horizontal">
+                                <div class="form-group required" ng-class="{ 'has-error': hebergementForm.name.$error.exists }">
+                                    <label class="col-xs-3 control-label" for="name">Nom</label>
+                                    <div class="col-xs-9">
+                                        <input id="name" name="name" type="text" class="form-control" ng-model="newHebergement.name" required asp-check-existence>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label" for="rue">Rue</label>
+                                    <div class="col-xs-9">
+                                        <input id="rue" type="text" class="form-control" ng-model="newHebergement.street">
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error': hebergementForm.postal.$invalid }">
+                                    <label class="col-xs-3 control-label" for="postal">Code postal</label>
+                                    <div class="col-xs-9">
+                                        <input id="postal" type="number" name="postal" class="form-control" ng-model="newHebergement.postal" ng-pattern="/\b\d{5}\b/">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label" for="city">Ville</label>
+                                    <div class="col-xs-9">
+                                        <input id="city" name="city" type="text" class="form-control" ng-model="newHebergement.city">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label" for="image">Image</label>
+                                    <div class="col-xs-9" style="margin-top: 4px;">
+                                        <div id="image" class="btn btn-default btn-sm" ng-disabled="!newHebergement.name || hebergementForm.name.$error.exists"
+                                        ngf-select ngf-chang="onFileSelectHebergement($files)">Sélectionner un fichier...</div>
+                                        <div class="btn btn-danger btn-sm" ng-click="deleteImageHebergement(newHebergement.image)"
+                                        ng-disabled="!newHebergement.image" title="Supprimer l'image">
+                                            <i class="fa fa-eraser"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-9 col-xs-offset-3">
+                                        <img ng-if="newHebergement.image" ng-src="{{ imageFullPath + imageToUpdate }}" alt="Image de l'hébergement" style="max-height: 200px; max-width: 200px;"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-7 form-horizontal">
+                                <div class="form-group" ng-class="{ 'has-error': hebergementForm.email.$invalid }">
+                                    <label class="col-xs-3 control-label" for="email">Adresse mail</label>
+                                    <div class="col-xs-9">
+                                        <input id="email" type="email" name="email" class="form-control" ng-model="newHebergement.email">
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error': hebergementForm.internet.$invalid }">
+                                    <label class="col-xs-3 control-label" for="internet">Site internet</label>
+                                    <div class="col-xs-9">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">http://</div>
+                                            <input id="internet" name="internet" type="text" class="form-control" ng-model="newHebergement.internetParsed"
+                                            ng-pattern="/^(?!(http:\/\/)).+/">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{ 'has-error': hebergementForm.facebook.$invalid }">
+                                    <label class="col-xs-3 control-label" for="facebook">Page Facebook</label>
+                                    <div class="col-xs-9">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">http://</div>
+                                            <input id="facebook" name="facebook" type="text" class="form-control" ng-model="newHebergement.facebookParsed"
+                                            ng-pattern="/^(?!(http:\/\/)).+/">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3 control-label" for="description">Description</label>
+                                    <div class="col-xs-9">
+                                        <textarea class="form-control" rows="3" id="description" ng-model="newHebergement.description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input bs-switch type="checkbox" ng-model="newHebergement.active" switch-wrapper="custom" switch-size="large" switch-label="Actif ?"
+                    switch-label-width="90px" switch-on-color="success" switch-off-color="danger" switch-on-text="<i class='fa fa-check'></i>"
+                    switch-off-text="<i class='fa fa-times'></i>" />
+                    <button type="button" class="btn btn-default" style="margin-left: 5px;" ng-click="$hide()">Annuler</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="uploading || hebergementForm.$invalid" ng-bind="modalForm.action"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

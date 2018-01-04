@@ -1,0 +1,43 @@
+{
+  "name": "aurignacsouspression",
+  "version": "0.0.1",
+  "authors": [
+    "Pierric Cistac <pierrot007@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.aurignacsouspression.fr",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-resource": "~1.4.0",
+    "angular-animate": "~1.4.0",
+    "angularfire": "~1.1",
+    "ng-ckeditor": "~0.2.1",
+    "angular-strap": "~2.3",
+    "ckeditor": "~4.4.3",
+    "ng-file-upload": "~5",
+    "ng-table": "~0.8.0",
+    "angular-ui-select": "~0.12",
+    "angular-bootstrap-switch": "~0.4",
+    "textAngular": "~1.4",
+    "angular-motion": "~0.4.2",
+    "angular-loading-bar": "~0.8.0",
+    "bootswatch-dist": "flatly",
+    "font-awesome": "^4.6.3"
+  },
+  "resolutions": {
+    "angular": "~1.4.0"
+  },
+  "devDependencies": {
+    "bootswatch": "v3.3.5+2"
+  }
+}

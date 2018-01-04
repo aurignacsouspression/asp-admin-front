@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h1 style="display: inline-block;">Gestion des éditions</h1>
+        <button class="btn btn-default" style="margin-top: -13px; margin-left: 20px;" ng-click="editionsCtrl.initNewEdition()">Ajouter une édition</button>
+    </div>
+</div>
+<div class="row" style="margin-top: 40px;">
+    <div class="col-xs-12">
+        <table ng-table class="table table-hover admin-table">
+            <tr ng-repeat="edition in editionsCtrl.editions">
+                <td data-title="'Affiche'">
+                    <img ng-if="edition.a3" ng-src="{{ editionFullPath + edition.a3 }}" alt="Affiche de l'édition" style="max-width: 500px; max-height: 500px;"
+                    />
+                    <span ng-if="!edition.a3">Pas d'image</span>
+                </td>
+                <td data-title="'Année'">{{edition.year}}</td>
+                <td data-title="'Description'" style="max-width: 600px;">{{edition.description}}</td>
+                <td data-title="'Action'" style="min-width: 100px; text-align: right">
+                    <a class="btn btn-default btn-sm" ng-href="#/{{editionsCtrl.category.name}}/{{edition.$id}}/content" title="Gérer les articles liés">Articles liés</a>
+                    <a class="btn btn-default btn-sm" title="Gérer les photos" ng-href="#/{{editionsCtrl.category.name}}/{{edition.$id}}/images"><i class="fa fa-picture-o fa-lg"></i></a>
+                    <button class="btn btn-default btn-sm" ng-click="editionsCtrl.initModifyEdition(edition)" title="Modifier l'édition">
+                        <i class="fa fa-pencil-square-o fa-lg"></i>
+                    </button>
+                    <button class="btn btn-default btn-sm" title="Supprimer" ng-click="editionsCtrl.initDeleteEdition(edition)">
+                        <i class="fa fa-times fa-lg"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

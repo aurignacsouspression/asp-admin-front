@@ -1,0 +1,20 @@
+node_modules
+bower_components
+build
+.tmp
+typings
+
+# Ignore Web Storm #
+.idea
+
+# Ignore Test reporters #
+#########################
+**/test/coverage
+report
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db

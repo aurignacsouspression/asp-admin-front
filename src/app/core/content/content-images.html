@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-xs-9">
+        <h1 style="display: inline-block;">
+            <a ng-href="#/{{imagesCtrl.category.name}}"><i class="fa fa-chevron-circle-left" style="cursor: pointer;" title="Retour arrière"></i></a>&nbsp;&nbsp;Gestion des images -
+            <span ng-bind="imagesCtrl.contentTitle"></span>
+        </h1>
+        <button class="btn btn-default" style="margin-top: -18px; margin-left: 20px;" ng-if="imagesCtrl.category.name == 'editions'" ng-click="imagesCtrl.reloadPhotos()">Recharger les photos</button>
+    </div>
+    <div ng-if="imagesCtrl.category.name != 'editions'" class="col-xs-3">
+        <div class="drop-box" ngf-select ngf-change="imagesCtrl.onFileSelectContentImages($files)" ngf-multiple="true" ngf-drop="true"
+        style="display: inline-block;" ng-show="dropSupported" ngf-accept="'image/*'">Cliquez ou faites glisser pour ajouter des images</div>
+        <div ngf-drop-available="dropSupported=true" style="display: inline-block;"
+        ng-show="!dropSupported">Votre navigateur internet n'est pas supporté !</div>
+    </div>
+</div>
+<div class="row" style="margin-top: 40px;">
+    <div class="col-xs-9">
+        <div class="admin-images" ng-repeat="image in imagesCtrl.contentImages" ng-click="imagesCtrl.displayImageInfos(image)">
+            <div class="image-container" ng-class="{edition: image.$id == imagesCtrl.contentImage.$id}">
+                <img ng-src="{{ imagesCtrl.imagesPath + image.filename }}" alt="{{image.legend}}" title="{{image.legend}}" />
+                <span ng-click="imagesCtrl.toggleImageState(imagesCtrl.contentImages.indexOf(image))">
+                    <span class="checkbox-container" ng-class="{selected: image.active}"></span>
+                    <span class="selected-state">
+                        <i ng-show="image.active" class="fa fa-check" title="Image activée"></i>
+                        <i ng-show="!image.active" class="fa fa-times" title="Image désactivée"></i>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-3">
+        <form name="imageForm" id="imageForm" ng-submit="imagesCtrl.commitImage()">
+            <h3 style="margin-top: 0">
+                <span>Détails de l'image</span>
+                <button type="submit" class="btn btn-primary" style="float: right; margin-top: -3px; margin-left: 5px;"
+                ng-disabled="!imagesCtrl.contentImage || imagesCtrl.uploading || imageForm.$invalid">Valider</button>
+                <div class="btn btn-danger" style="float: right; margin-top: -3px;" ng-click="imagesCtrl.deleteContentImage()" ng-disabled="!imagesCtrl.contentImage"
+                title="Supprimer l'image">
+                    <i class="fa fa-eraser"></i>
+                </div>
+            </h3>
+            <div class="form-group">
+                <label class="control-label" for="filename">Nom du fichier</label>
+                <div>
+                    <input id="filename" name="filename" type="text" class="form-control" ng-model="imagesCtrl.contentImage.filename" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="legend">Légende</label>
+                <div>
+                    <input id="legend" name="legend" type="text" class="form-control" ng-model="imagesCtrl.contentImage.legend" ng-disabled="!imagesCtrl.contentImage">
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-6" style="padding-left: 0">
+                    <input id="active" bs-switch type="checkbox" ng-model="imagesCtrl.contentImage.active" switch-wrapper="custom"
+                           switch-label="Active ?" switch-on-color="success" switch-off-color="danger"
+                           switch-on-text="<i class='fa fa-check'></i>" switch-off-text="<i class='fa fa-times'></i>" switch-active="{{ imagesCtrl.switchActive }}"/>
+                </div>
+                <div class="col-xs-6" style="padding-right: 0">
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn btn-default btn-sm" ng-click="imagesCtrl.changeImagePosition(1)" ng-disabled="!imagesCtrl.contentImage || imagesCtrl.contentImage.$priority == 0 || imagesCtrl.category.name == 'editions'">Monter</div>
+                        <div class="btn btn-default btn-sm" ng-click="imagesCtrl.changeImagePosition(0)" ng-disabled="!imagesCtrl.contentImage || imagesCtrl.contentImages.length <= imagesCtrl.contentImage.$priority + 1 || imagesCtrl.category.name == 'editions'">Baisser</div>
+                    </div>
+                </div>
+            </div>
+            <img ng-if="imagesCtrl.contentImage.filename" ng-src="{{ imagesCtrl.imagesPath + imagesCtrl.contentImage.filename }}" style="max-width: 100%; margin-top: 15px; border-radius: 4px" />
+        </form>
+    </div>
+</div>

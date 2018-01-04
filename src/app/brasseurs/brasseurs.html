@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h1 style="display: inline-block;">Gestion des brasseurs</h1>
+        <button class="btn btn-default" style="margin-top: -13px; margin-left: 20px;" ng-click="brasseursCtrl.initNewBrasseur()">Ajouter un brasseur</button>
+    </div>
+</div>
+<div class="row" style="margin-top: 40px;">
+    <div class="col-xs-12">
+        <table ng-table class="table table-hover admin-table">
+            <tr ng-repeat="brasseur in brasseursCtrl.brasseurs">
+                <td data-title="'Nom de la brasserie'" style="min-width: 180px;">{{brasseur.name}}</td>
+                <td data-title="'Contact'" style="min-width: 150px;">
+                    <a href="mailto:{{brasseur.email}}" class="btn btn-default btn-sm" title="Envoyer un mail" ng-if="brasseur.email">@</a>
+                    <a href="{{brasseur.internet}}" target="_blank" class="btn btn-default btn-sm" title="Visiter le site web" ng-if="brasseur.internet">www</a>
+                    <a href="{{brasseur.facebook}}" target="_blank" class="btn btn-default btn-sm" title="Aller sur la page Facebook" ng-if="brasseur.facebook"><i class="fa fa-facebook fa-lg"></i></a>
+                </td>
+                <td data-title="'Nom du brasseur'" style="min-width: 180px;">{{brasseur.contactName}}</td>
+                <td data-title="'Adresse postale'">
+                    <span ng-if="brasseur.street" ng-class="{'virgule-rue-addresse': brasseur.street && (brasseur.postal || brasseur.city)}">{{ brasseur.street }}</span>
+                    <span ng-if="brasseur.postal">{{ brasseur.postal }}</span>
+                    <span ng-if="brasseur.city">{{ brasseur.city }}</span>
+                </td>
+                <td data-title="'Description courte'" style="max-width: 600px;">{{brasseur.shortDescription | limitTo:200}}...</td>
+                <td data-title="'Description longue'" style="max-width: 600px;">
+                    <span ng-bind-html="brasseur.longDescription | limitTo:230"></span>
+                    <span ng-if="!brasseur.longDescription">...</span>
+                </td>
+                <td data-title="'Action'" style="min-width: 150px; text-align: right;">
+                    <a class="btn btn-default btn-sm" title="Gérer les images" ng-href="#/{{brasseursCtrl.category.name}}/{{brasseur.$id}}/images"><i class="fa fa-picture-o fa-lg"></i></a>
+                    <button class="btn btn-default btn-sm" title="Modifier la brasserie" ng-click="brasseursCtrl.initModifyBrasseur(brasseur)">
+                        <i class="fa fa-pencil-square-o fa-lg"></i>
+                    </button>
+                    <button class="btn btn-default btn-sm" title="Supprimer" ng-click="brasseursCtrl.initDeleteBrasseur(brasseur)">
+                        <i class="fa fa-times fa-lg"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

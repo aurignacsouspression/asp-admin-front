@@ -1,0 +1,75 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 700px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="modalForm.title"></h4>
+            </div>
+
+            <form name="pressOrganForm" ng-submit="commitPressOrgan()">
+
+                <div class="modal-body" ng-show="content">
+
+                    <div class="row" ng-if="uploadErrors">
+                        <div class="col-xs-12">
+                            <div class="alert alert-dismissable alert-warning">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <h4>Attention, une erreur a été détectée</h4>
+                                <p>{{ uploadErrors }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 form-horizontal">
+                            <div class="form-group required" ng-class="{ 'has-error': pressOrganForm.pressName.$error.exists }">
+                                <label class="col-xs-4 control-label" for="pressName">Nom du titre de presse</label>
+
+                                <div class="col-xs-8">
+                                    <input id="pressName" name="pressName" type="text" class="form-control" ng-model="newPressOrgan.name" required asp-check-existence>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-class="{ 'has-error': pressOrganForm.internet.$invalid }">
+                                <label class="col-xs-4 control-label" for="internet">Site internet</label>
+
+                                <div class="col-xs-8">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">http://</div>
+                                        <input id="internet" name="internet" type="text" class="form-control" ng-model="newPressOrgan.internetParsed" ng-pattern="/^(?!(http:\/\/)).+/">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label" for="logo">Logo</label>
+
+                                <div class="col-xs-8" style="margin-top: 4px;">
+                                    <div id="logo" class="btn btn-default btn-sm" ng-disabled="!newPressOrgan.name || pressOrganForm.pressName.$error.exists"
+                                         ngf-select ngf-change="onFileSelectPresse($files)">Sélectionner un fichier...</div>
+                                    <div class="btn btn-danger btn-sm" ng-click="deleteImagePresse(newPressOrgan.logo)" ng-disabled="!newPressOrgan.logo" title="Supprimer le logo">
+                                        <i class="fa fa-eraser"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-8 col-xs-offset-4">
+                                    <img ng-if="newPressOrgan.logo" ng-src="{{ pressLogoFullPath + pressLogoToUpdate }}" alt="Logo du titre de presse" style="max-height: 200px; max-width: 200px;"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">Annuler</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="uploading || pressOrganForm.$invalid" ng-bind="modalForm.action"></button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

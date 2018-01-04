@@ -1,0 +1,41 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 80%; min-width: 1000px; max-width: 1420px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">Gestion des images de l'article</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" ng-if="uploadErrors">
+                    <div class="col-xs-12">
+                        <div class="alert alert-dismissable alert-warning">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <h4>Attention, une erreur a été détectée : si vous n'avez pas encore ajouté d'image, n'en tenez pas compte.</h4>
+                            <p>{{ uploadErrors }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="admin-images" ng-repeat="image in articleImages">
+                            <div class="image-container" ng-class="{edition: imageSelected == image}">
+                                <img ng-src="{{ articleImagesPath + image }}" ng-click="selectArticleImage(image)" alt="{{image}}" title="{{image}}" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">Retour</button>
+                <button type="button" class="btn btn-default" ngf-select ngf-change="onFileSelectContentArticleImages($files)" multiple
+                accept="image/*">
+                    <i class="fa fa-upload"></i>&nbsp;&nbsp;Ajouter des images</button>
+                <div class="btn btn-danger" ng-click="deleteArticleImage()" ng-disabled="!imageSelected"
+                title="Supprimer l'image">
+                    <i class="fa fa-eraser"></i>
+                </div>
+                <button type="button" class="btn btn-primary" ng-disabled="uploading || articleForm.$invalid || !imageSelected" ng-click="insertArticleImage()">Insérer l'image</button>
+            </div>
+        </div>
+    </div>
+</div>

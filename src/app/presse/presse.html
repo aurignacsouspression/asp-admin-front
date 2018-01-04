@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h1 style="display: inline-block;">Gestion des articles de presse</h1>
+        <button class="btn btn-default" style="margin-top: -13px; margin-left: 20px;" ng-click="presseCtrl.initNewArticle()">Ajouter un article</button>
+        <button class="btn btn-default" style="margin-top: -13px; margin-left: 5px;" ng-click="presseCtrl.initNewPressOrgan()">Ajouter un titre de presse</button>
+    </div>
+</div>
+<div class="row" style="margin-top: 40px;">
+    <div class="col-xs-12">
+        <div ng-model="presseCtrl.pressTabs.activeTab" bs-tabs>
+            <div ng-repeat="tab in presseCtrl.pressTabs" title="{{ tab.title }}" ng-include="tab.template" style="margin-top: 10px;" bs-pane></div>
+        </div>
+    </div>
+</div>

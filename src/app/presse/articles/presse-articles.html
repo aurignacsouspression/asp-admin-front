@@ -1,0 +1,27 @@
+<table ng-table class="table table-hover admin-table">
+    <tr ng-repeat="article in presseCtrl.articles">
+        <td data-title="'Titre de l\'article'" style="min-width: 180px;">{{ article.title }}</td>
+        <td data-title="'Titre de presse'" style="min-width: 180px;">{{ presseCtrl.presse.$getRecord(article.pressOrgan).name }}</td>
+        <td data-title="'Lien'" style="min-width: 150px">
+            <a href="{{article.internet}}" target="_blank" title="{{article.internet}}" ng-if="article.internet">{{ article.internet | limitTo:15 }}...</a>
+            <span ng-if="!article.internet">Article papier</span>
+        </td>
+        <td data-title="'Extrait'" style="max-width: 600px;">
+            <span ng-if="article.extract">{{ article.extract | limitTo:200 }}...</span>
+            <span ng-if="!article.extract">Article papier</span>
+        </td>
+        <td data-title="'Edition'">{{ presseCtrl.editions.$getRecord(article.edition).year }}</td>
+        <td data-title="'Date de parution'" style="max-width: 600px;">
+            <span ng-if="article.date" ng-bind="timestampToStringDate(article.date)"></span>
+            <span ng-if="!article.date">Date non spécifiée</span>
+        </td>
+        <td data-title="'Action'" style="min-width: 100px; text-align: right">
+            <button class="btn btn-default btn-sm" title="Modifier l'article" ng-click="presseCtrl.initModifyArticle($index)">
+                <i class="fa fa-pencil-square-o fa-lg"></i>
+            </button>
+            <button class="btn btn-default btn-sm" title="Supprimer" ng-click="presseCtrl.initDeleteArticle(article)">
+                <i class="fa fa-times fa-lg"></i>
+            </button>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h1 style="display: inline-block;">
+            <a ng-href="#/{{articlesCtrl.category.name}}"><i class="fa fa-chevron-circle-left" style="cursor: pointer;" title="Retour arrière"></i></a>&nbsp;&nbsp;Gestion des articles -
+            <span ng-bind="articlesCtrl.contentTitle"></span>
+        </h1>
+        <a class="btn btn-default" style="margin-top: -13px; margin-left: 20px;" ng-href="#/{{articlesCtrl.category.name}}/{{articlesCtrl.contentKey}}/content/create">
+            Ajouter un article
+        </a>
+    </div>
+</div>
+<div class="row" style="margin-top: 40px;">
+    <div class="col-xs-12">
+        <table ng-table class="table table-hover admin-table">
+            <tr ng-repeat="contentArticle in contentArticles">
+                <td data-title="'Titre de l\'article'" style="min-width: 180px;">{{contentArticle.title}}</td>
+                <td data-title="'Mots-clés'" style="min-width: 150px">{{contentArticle.keywords}}</td>
+                <td data-title="'Description'" style="max-width: 600px;">{{contentArticle.description | limitTo:200}}
+                    <span ng-if="contentArticle.description.length > 200">...</span>
+                </td>
+                <td data-title="'Action'" style="min-width: 100px; text-align: right">
+                    <a class="btn btn-default btn-sm" title="Modifier l'article" ng-href="#/{{articlesCtrl.category.name}}/{{articlesCtrl.contentKey}}/content/edit/{{contentArticle.$id}}">
+                        <i class="fa fa-pencil-square-o fa-lg"></i>
+                    </a>
+                    <button class="btn btn-default btn-sm" title="Supprimer" ng-click="articlesCtrl.initDeleteContentArticle(contentArticle)">
+                        <i class="fa fa-times fa-lg"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

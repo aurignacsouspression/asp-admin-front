@@ -1,0 +1,60 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">Modifier un utilisateur</h4>
+            </div>
+
+            <form name="userForm" ng-submit="updateUser()">
+
+                <div class="modal-body" ng-show="content">
+
+                    <div class="row" ng-if="usersCtrl.serverResult.data.length > 0">
+                        <div class="col-xs-12">
+                            <div class="alert alert-dismissable alert-warning">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <h4>Une ou plusieurs erreurs ont été détectées :</h4>
+                                <ul>
+                                    <li ng-repeat="error in usersCtrl.serverResult.data">{{ error }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xs-12 form-horizontal">
+                            <div class="form-group required" ng-class="{ 'has-error': userForm.email.$invalid }">
+                                <label class="col-xs-3 control-label" for="email">Adresse mail</label>
+
+                                <div class="col-xs-9">
+                                    <input id="email" name="email" type="text" class="form-control" ng-model="usersCtrl.selectedUser.email" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group required">
+                                <label class="col-xs-3 control-label" for="rights">Droits</label>
+
+                                <div class="col-xs-9">
+                                    <button id="rights" type="button" class="btn btn-default btn-block" ng-model="usersCtrl.selectedUser.rights"
+                                            data-animation="am-flip-x" data-placeholder="Sélectionnez un niveau"
+                                            bs-options="usersCtrl.rightsList.indexOf(value) as value for value in usersCtrl.rightsList" bs-select required>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">Annuler</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Sauvegarder</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

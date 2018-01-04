@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h1 style="display: inline-block;">Gestion des partenaires</h1>
+        <button class="btn btn-default" style="margin-top: -13px; margin-left: 20px;" ng-click="partenairesCtrl.initNewPartenaire()">Ajouter un partenaire</button>
+    </div>
+</div>
+<div class="row" style="margin-top: 40px;">
+    <div class="col-xs-12">
+        <table ng-table class="table table-hover admin-table">
+            <tr ng-repeat="partenaire in partenairesCtrl.partenaires">
+                <td data-title="'Nom du partenaire'" style="min-width: 180px;">{{partenaire.name}}</td>
+                <td data-title="'Contact'" style="min-width: 150px">
+                    <a href="mailto:{{partenaire.email}}" class="btn btn-default btn-sm" title="Envoyer un mail" ng-if="partenaire.email">@</a>
+                    <a href="{{partenaire.internet}}" target="_blank" class="btn btn-default btn-sm" title="Visiter le site web" ng-if="partenaire.internet">www</a>
+                    <a href="{{partenaire.facebook}}" target="_blank" class="btn btn-default btn-sm" title="Aller sur la page Facebook" ng-if="partenaire.facebook"><i class="fa fa-facebook fa-lg"></i></a>
+                </td>
+                <td data-title="'Adresse postale'">{{ partenaire.street + ', ' + partenaire.postal + ' ' + partenaire.city }}</td>
+                <td data-title="'Taille d\'encart'" style="max-width: 600px;">{{ encartSize[partenaire.size] }}</td>
+                <td data-title="'Activé'">
+                    <input bs-switch type="checkbox" ng-model="partenaire.active" ng-change="partenairesCtrl.partenaires.$save(partenaire)" switch-wrapper="custom"
+                    switch-label-width="auto" switch-handle-width="auto" switch-on-color="success" switch-off-color="danger" switch-on-text="<i class='fa fa-check'></i>"
+                    switch-off-text="<i class='fa fa-times'></i>" />
+                </td>
+                <td data-title="'Action'" style="min-width: 100px; text-align: right">
+                    <button class="btn btn-default btn-sm" ng-click="partenairesCtrl.initModifyPartenaire(partenaire)" title="Modifier les infos">
+                        <i class="fa fa-pencil-square-o fa-lg"></i>
+                    </button>
+                    <button class="btn btn-default btn-sm" title="Supprimer" ng-click="partenairesCtrl.initDeletePartenaire(partenaire)">
+                        <i class="fa fa-times fa-lg"></i>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

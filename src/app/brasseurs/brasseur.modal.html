@@ -1,0 +1,126 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 80%; min-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind="modalForm.title"></h4>
+            </div>
+            <form name="brasseurForm" ng-submit="commitBrasseur()">
+                <div class="modal-body" ng-show="content">
+                    <div class="row" ng-if="uploadErrors">
+                        <div class="col-xs-12">
+                            <div class="alert alert-dismissable alert-warning">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <h4>Attention, une erreur a été détectée</h4>
+                                <p>{{ uploadErrors }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-5 form-horizontal">
+                            <div class="form-group required" ng-class="{ 'has-error': brasseurForm.brasseurName.$error.exists }">
+                                <label class="col-xs-4 control-label" for="brasseurName">Nom de la brasserie</label>
+                                <div class="col-xs-8">
+                                    <input id="brasseurName" name="brasseurName" type="text" class="form-control" ng-model="newBrasseur.name" required asp-check-existence>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label" for="contactName">Nom du brasseur</label>
+                                <div class="col-xs-8">
+                                    <input id="contactName" type="text" class="form-control" ng-model="newBrasseur.contactName">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': brasseurForm.email.$invalid }">
+                                <label class="col-xs-4 control-label" for="email">Adresse mail</label>
+                                <div class="col-xs-8">
+                                    <input id="email" type="email" name="email" class="form-control" ng-model="newBrasseur.email">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': brasseurForm.internet.$invalid }">
+                                <label class="col-xs-4 control-label" for="internet">Site internet</label>
+                                <div class="col-xs-8">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">http://</div>
+                                        <input id="internet" name="internet" type="text" class="form-control" ng-model="newBrasseur.internetParsed"
+                                        ng-pattern="/^(?!(http:\/\/)).+/">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': brasseurForm.facebook.$invalid }">
+                                <label class="col-xs-4 control-label" for="facebook">Page Facebook</label>
+                                <div class="col-xs-8">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">http://</div>
+                                        <input id="facebook" name="facebook" type="text" class="form-control" ng-model="newBrasseur.facebookParsed"
+                                        ng-pattern="/^(?!(http:\/\/)).+/">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label" for="rue">Rue</label>
+                                <div class="col-xs-8">
+                                    <input id="rue" type="text" class="form-control" ng-model="newBrasseur.street">
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': brasseurForm.postal.$invalid }">
+                                <label class="col-xs-4 control-label" for="postal">Code postal</label>
+                                <div class="col-xs-8">
+                                    <input id="postal" type="number" name="postal" class="form-control" ng-model="newBrasseur.postal">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label" for="city">Ville</label>
+                                <div class="col-xs-8">
+                                    <input id="city" name="city" type="text" class="form-control" ng-model="newBrasseur.city">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label" for="editions">Années de participation</label>
+                                <div class="col-xs-8">
+                                    <ui-select id="editions" multiple ng-model="modalForm.brasseurEditions" ng-disabled="disabled">
+                                        <ui-select-match placeholder="Sélectionner...">{{$item.year}}</ui-select-match>
+                                        <ui-select-choices repeat="edition in brasseursCtrl.editions | filter:$select.search">{{edition.year}}</ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-7 form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label" for="shortDescription">Description courte</label>
+                                <div class="col-xs-9">
+                                    <textarea class="form-control" rows="3" id="shortDescription" ng-model="newBrasseur.shortDescription"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label" for="longDescription">Description longue</label>
+                                <div class="col-xs-9">
+                                    <textarea id="longDescription" ckeditor="editorOptions" ng-model="newBrasseur.longDescription"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label" for="logo">Logo</label>
+                                <div class="col-xs-9" style="margin-top: 4px;">
+                                    <div id="logo" class="btn btn-default btn-sm" ng-disabled="!newBrasseur.name || brasseurForm.brasseurName.$error.exists" ngf-select ngf-change="onFileSelectBrasseur($files)">Sélectionner un fichier...</div>
+                                    <div class="btn btn-danger btn-sm" ng-click="deleteBrasseurImage(newBrasseur.logo)" ng-disabled="!newBrasseur.logo"
+                                    title="Supprimer le logo">
+                                        <i class="fa fa-eraser"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-9 col-xs-offset-3">
+                                    <img ng-if="newBrasseur.logo" ng-src="{{ logoFullPath + brasseurLogoToUpdate }}" alt="Logo de la brasserie" style="max-height: 200px; max-width: 200px;"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">Annuler</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="uploading || brasseurForm.$invalid" ng-bind="modalForm.action"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

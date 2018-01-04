@@ -1,0 +1,63 @@
+{
+    "version": "v4",
+    "repo": "borisyankov/DefinitelyTyped",
+    "ref": "master",
+    "path": "typings",
+    "bundle": "typings/tsd.d.ts",
+    "installed": {
+        "angularjs/angular.d.ts": {
+            "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+        },
+        "jquery/jquery.d.ts": {
+            "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+        },
+        "firebase/firebase.d.ts": {
+            "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+        },
+        "angularfire/angularfire.d.ts": {
+            "commit": "a9c59f8166b4d7f1e8c4309a506987c2e6d78b5e"
+        },
+        "gulp/gulp.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "node/node.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "vinyl/vinyl.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "gulp-util/gulp-util.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "chalk/chalk.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "through2/through2.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "gulp-if/gulp-if.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "yargs/yargs.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "minimatch/minimatch.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "glob/glob.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "del/del.d.ts": {
+            "commit": "f999dcd9543265848a33fa3bb8379bf0393d33c8"
+        },
+        "chokidar/chokidar.d.ts": {
+            "commit": "34b5eb499d3c3be97660019dfb309a6d31d21837"
+        },
+        "browser-sync/browser-sync.d.ts": {
+            "commit": "34b5eb499d3c3be97660019dfb309a6d31d21837"
+        },
+        "angularjs/angular-resource.d.ts": {
+            "commit": "fa8d9683f37d07ed79617a6e037916c6718aeb11"
+        }
+    }
+}

@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h1 style="display: inline-block;">Gestion des hébergements</h1>
+        <button class="btn btn-default" style="margin-top: -13px; margin-left: 20px;" ng-click="hebergementCtrl.initNewHebergement()">
+            Ajouter un hébergement
+        </button>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 40px;">
+    <div class="col-xs-12">
+
+        <table ng-table class="table table-hover admin-table">
+            <tr ng-repeat="hebergement in hebergementCtrl.hebergements">
+                <td data-title="'Nom de l\'hébergement'" style="min-width: 180px;">{{hebergement.name}}</td>
+                <td data-title="'Contact'" style="min-width: 150px">
+                    <a href="mailto:{{hebergement.email}}" class="btn btn-default btn-sm" title="Envoyer un mail" ng-if="hebergement.email">@</a>
+                    <a href="{{hebergement.internet}}" target="_blank" class="btn btn-default btn-sm" title="Visiter le site web" ng-if="hebergement.internet">www</a>
+                    <a href="{{hebergement.facebook}}" target="_blank" class="btn btn-default btn-sm" title="Aller sur la page Facebook" ng-if="hebergement.facebook"><i class="fa fa-facebook fa-lg"></i></a>
+                </td>
+                <td data-title="'Adresse postale'">
+             <span ng-if="hebergement.street"
+                          ng-class="{'virgule-rue-addresse': hebergement.street && (hebergement.postal || hebergement.city)}">{{ hebergement.street }}</span>
+                    <span ng-if="hebergement.postal">{{ hebergement.postal }}</span>
+                    <span ng-if="hebergement.city">{{ hebergement.city }}</span>
+                </td>
+                <td data-title="'Activé'">
+                    <input bs-switch type="checkbox" ng-model="hebergement.active" ng-change="hebergements.$save(hebergement)" switch-wrapper="custom"
+                           switch-label-width="auto" switch-handle-width="auto" switch-on-color="success" switch-off-color="danger"
+                           switch-on-text="<i class='fa fa-check'></i>" switch-off-text="<i class='fa fa-times'></i>"/>
+                </td>
+                <td data-title="'Image'">
+                    <img ng-if="hebergement.image" ng-src="{{ imageFullPath + hebergement.image }}" alt="Photo de l'hébergement" style="max-width: 500px; max-height: 500px;"/>
+                    <span ng-if="!hebergement.image">Pas d'image</span>
+                </td>
+                <td data-title="'Action'" style="min-width: 100px; text-align: right">
+                    <button class="btn btn-default btn-sm" ng-click="hebergementCtrl.initModifyHebergement(hebergement)" title="Modifier les infos"><i class="fa fa-pencil-square-o fa-lg"></i></button>
+                    <button class="btn btn-default btn-sm" title="Supprimer" ng-click="hebergementCtrl.initDeleteHebergement(hebergement)"><i class="fa fa-times fa-lg"></i></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
